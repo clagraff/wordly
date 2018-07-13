@@ -34,6 +34,16 @@ $ mkvirtualenv -p python3 --no-site-packages wordly
 $ pip install -r requirements.txt
 ```
 
+## Linting & Testing
+All required tools are listed in the `requirements.txt` file and must be
+installed.
+
+Code for `wordly` must pass each of the following:
+* `pycodestyle`
+* `pydocstyle`
+* `pylint`
+* `pytest`
+
 # License
 MIT License
 
