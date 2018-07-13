@@ -1,7 +1,7 @@
 # Python CircleCI 2.0 configuration file
 version: 2
 jobs:
-  linting:
+  build:
     docker:
       - image: circleci/python:3.6.1
     working_directory: /src/app
@@ -11,18 +11,6 @@ jobs:
       - run: pylint ./wordly
       - run: pycodestyle ./wordly
       - run: pydocstyle ./wordly
-  testing:
-    docker:
-      - image: circleci/python:3.6.1
-    working_directory: /src/app
-    steps:
-      - checkout
       - run: pip install -r requirements.txt
       - run: pytest -m unit
       - run: pytest -m user
-workflows:
-  version: 2
-  main:
-    jobs:
-      - linting
-      - testing 
