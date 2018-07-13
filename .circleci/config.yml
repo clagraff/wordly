@@ -4,7 +4,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.1
-    working_directory: /src/app
+    working_directory: ~/wordly
     steps:
       - checkout
       - run: pip install -r requirements.txt
