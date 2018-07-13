@@ -1,0 +1,4 @@
+pycodestyle<2.5
+pydocstyle<2.2
+pylint<2.0
+pytest<3.7
