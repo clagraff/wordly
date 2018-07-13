@@ -7,7 +7,7 @@ jobs:
     working_directory: ~/wordly
     steps:
       - checkout
-      - run: pip install -r requirements.txt
+      - run: pip install --user -r requirements.txt
       - run: pylint ./wordly
       - run: pycodestyle ./wordly
       - run: pydocstyle ./wordly
