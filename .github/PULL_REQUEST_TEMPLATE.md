@@ -1,9 +1,3 @@
-* **Please check if the PR fulfills these requirements**
-- [ ] The commit message follows our guidelines
-- [ ] Tests for the changes have been added (for bug fixes / features)
-- [ ] Docs have been added / updated (for bug fixes / features)
-
-
 * **What is the current behavior?**
 <!-- please link to open issue if one exists -->
 
