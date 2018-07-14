@@ -135,6 +135,14 @@ tests/user/test_invocation.py ........                       [100%]
 ==================== 49 passed in 0.56 seconds =====================
 ```
 
+## Contributing
+Pull requests and issues are welcomed! We only ask that you try to fill-out
+the information presented as you create a new PR/issue.
+
+For pull requests, please ensure your branch passes all CI checks.
+Also make sure your branch is rebased off the 
+head of `master`, as we do [rebase](https://git-scm.com/book/en/v2/Git-Branching-Rebasing) merges 
+
 # License
 MIT License
 
