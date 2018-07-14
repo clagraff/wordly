@@ -85,6 +85,16 @@ class TestBoard_search:
         expected = [(0, 0), (1, 1), (2, 2), (3, 3)]
         assert self.test_board.search("cogs") == expected
 
+    def test_diagonal_west_word_on_board(self):
+        """Test searching for diagonal-east word returns char positions."""
+        expected = [(3, 3), (2, 2), (1, 1), (0, 0)]
+        assert self.test_board.search("sgio") == expected
+
+    def test_can_find_reversed_word(self):
+        """Test that searching for a reversed word returns char positions."""
+        expected = [(0, 0), (1, 0), (2, 0), (3, 0)][::-1]
+        assert self.test_board.search("stac") == expected
+
     def test_casing_doesnt_matter(self):
         """Test that searching is case-insensitive."""
         expected = [(0, 0), (1, 0), (2, 0), (3, 0)]
