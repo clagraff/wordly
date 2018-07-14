@@ -13,24 +13,26 @@ def main():
     headers, *rows = content.strip().split("\n")
     rows = "\n".join(rows)
 
+    # Create board; exit on error.
     try:
         board = wordsearch.Board(rows)
-    except Exception as error:
+    except Exception as error:  # pylint: disable=broad-except
         parser.error(str(error))
         return
 
     words = headers.split(",")
 
+    # try to find and output each word.
     for word in words:
         positions = board.search(word)
         if not positions:
-            continue  # word not found. do not emit anything
+            continue  # word not found. do not emit anything.
 
+        # format in same style as the Pillar example output.
         print("{}: {}".format(
             word,
             ",".join(str(pos) for pos in positions).replace(" ", ""),
         ))
-    return
 
 
 if __name__ == "__main__":
