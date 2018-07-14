@@ -49,3 +49,10 @@ def test_can_dispaly_help_text(run):
 
     assert code == 0
     assert output  # There should be _some_ output. We dont care what it is.
+
+
+def test_non_existent_input_file(run):
+    """Test that wordly will return an error if given a non-existent file."""
+    _, code = run("/tmp/this/file/really/should/not/exist")
+
+    assert code != 0
