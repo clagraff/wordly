@@ -49,9 +49,27 @@ class TestHorizontalLine:
         ]
     )
     def test_search(self, word, result):
-        """Test that search method raises NotImplemented error."""
+        """Assert search method returns expected result for the current word."""
         index, characters = 0, "thislinehasmanywords"
         line = wordsearch.HorizontalLine(index, characters)
+
+        assert line.search(word) == result
+
+
+class TestVerticalLine:
+
+    @pytest.mark.parametrize(
+        "word,result",
+        [
+            ("this", [(0, 0), (0, 1), (0, 2), (0, 3)]),
+            ("words", [(0, 15), (0, 16), (0, 17), (0, 18), (0, 19)]),
+            ("has", [(0, 8), (0, 9), (0, 10)]),
+        ]
+    )
+    def test_search(self, word, result):
+        """Assert search method returns expected result for the current word."""
+        index, characters = 0, "thislinehasmanywords"
+        line = wordsearch.VerticalLine(index, characters)
 
         assert line.search(word) == result
 
