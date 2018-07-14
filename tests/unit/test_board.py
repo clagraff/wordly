@@ -136,11 +136,6 @@ class TestDiagonalWestLine:
         assert line.search(word) == result
 
 
-
-
-
-
-
 class TestBoard_init:
     """Test suite for board __init__ method."""
 
