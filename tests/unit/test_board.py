@@ -36,3 +36,8 @@ class TestBoard_init:
         """Test ValueError raised when providing multiple chars per column."""
         with pytest.raises(ValueError):
             wordsearch.Board("too,many,chars\nper,each,col\non,this,board")
+
+    def test_type_error_on_wrong_argument_type(self):
+        """Test TypeError is raised when providing incorrect argument type."""
+        with pytest.raises(TypeError):
+            wordsearch.Board(1337)
