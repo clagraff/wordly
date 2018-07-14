@@ -43,9 +43,16 @@ def test_too_many_arguments(run):
     assert code != 0
 
 
-def test_can_dispaly_help_text(run):
+@pytest.mark.parametrize(
+    "help_flag",
+    [
+        ("-h"),
+        ("--help"),
+    ]
+)
+def test_dispaly_help(run, help_flag):
     """Test that wordly can display help text using the help flag."""
-    output, code = run("--help")
+    output, code = run(help_flag)
 
     assert code == 0
     assert output  # There should be _some_ output. We dont care what it is.
