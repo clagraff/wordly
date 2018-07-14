@@ -92,6 +92,27 @@ class TestDiagonalEastLine:
         assert line.search(word) == result
 
 
+class TestDiagonalWestLine:
+
+    @pytest.mark.parametrize(
+        "word,result",
+        [
+            ("this", [(20, 0), (19, 1), (18, 2), (17, 3)]),
+            ("words", [(5, 15), (4, 16), (3, 17), (2, 18), (1, 19)]),
+            ("has", [(12, 8), (11, 9), (10, 10)]),
+        ]
+    )
+    def test_search(self, word, result):
+        """Assert search method returns expected result for the current word."""
+        index, characters = 20, "thislinehasmanywords"
+        line = wordsearch.DiagonalWestLine(index, characters)
+
+        assert line.search(word) == result
+
+
+
+
+
 
 
 class TestBoard_init:
