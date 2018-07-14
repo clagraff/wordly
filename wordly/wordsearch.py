@@ -1,5 +1,4 @@
 """Package contains objects representing a wordsearch board."""
-from collections import defaultdict
 
 
 class Line:
@@ -91,6 +90,21 @@ class DiagonalWestLine(Line):
         return characters
 
 
+class Lines:
+    """Manager for lines of a similar class."""
+
+    def __init__(self, cls):
+        """Initialize class instance with the provided Line class type."""
+        self.cls = cls
+        self.lines = {}
+
+    def get(self, key):
+        """Return the desired line instance by key; create if doesn't exist."""
+        if key not in self.lines:
+            self.lines[key] = self.cls(key)
+        return self.lines[key]
+
+
 class Board:
     """Representation of a wordsearch board."""
 
@@ -102,12 +116,11 @@ class Board:
         if not isinstance(csv, str):
             raise TypeError("CSV argument must be a string")
 
-        self._size = 0
-
-        self._horizontal = defaultdict(str)
-        self._vertical = defaultdict(str)
-        self._diagonal_east = defaultdict(str)
-        self._diagonal_west = defaultdict(str)
+        self.size = 0
+        self.horizontals = Lines(HorizontalLine)
+        self.verticals = Lines(VerticalLine)
+        self.diagonal_easts = Lines(DiagonalEastLine)
+        self.diagonal_wests = Lines(DiagonalWestLine)
 
         self._parse_input(csv)
 
@@ -125,10 +138,10 @@ class Board:
 
                 char = char.lower()
 
-                self._horizontal[row] += char
-                self._vertical[column] += char
-                self._diagonal_east[column - row] += char
-                self._diagonal_west[column + row] += char
+                self.horizontals.get(row).append(char)
+                self.verticals.get(column).append(char)
+                self.diagonal_easts.get(column - row).append(char)
+                self.diagonal_wests.get(column + row).append(char)
 
                 column += 1
             row += 1
@@ -136,7 +149,7 @@ class Board:
         if row != column:
             raise ValueError("provide word search board must be a square")
 
-        self._size = row
+        self.size = row
 
     def search(self, word):
         """Return position of all characters of search term on the board."""
@@ -146,79 +159,24 @@ class Board:
         if not word or len(word.split(" ")) > 1:
             raise ValueError("must provide a single word to search for")
 
-        if len(word) > self._size:
+        if len(word) > self.size:
             return None
 
         word = word.lower()
-
-        search_methods = [
-            self._search_horizontal,
-            self._search_vertical,
-            self._search_diagonal_east,
-            self._search_diagonal_west,
+        all_possible_lines = [
+            *self.horizontals.lines.values(),
+            *self.verticals.lines.values(),
+            *self.diagonal_easts.lines.values(),
+            *self.diagonal_wests.lines.values(),
         ]
 
-        for method in search_methods:
-            chars = method(word)
+        for line in all_possible_lines:
+            chars = line.search(word)
             if chars:
                 return chars
 
-            reversed_chars = method(word[::-1])
+            reversed_chars = line.search(word[::-1])
             if reversed_chars:
                 return reversed_chars[::-1]
 
         return None
-
-    def _search_horizontal(self, word):
-        characters = []
-
-        for row, line in self._horizontal.items():
-            try:
-                index = line.index(word)
-                for offset in range(len(word)):
-                    characters.append((index+offset, row))
-            except ValueError:
-                pass
-
-        return characters
-
-    def _search_vertical(self, word):
-        characters = []
-
-        for column, line in self._vertical.items():
-            try:
-                index = line.index(word)
-                for offset in range(len(word)):
-                    characters.append((column, index+offset))
-            except ValueError:
-                pass
-
-        return characters
-
-    def _search_diagonal_east(self, word):
-        characters = []
-
-        for row, line in self._diagonal_east.items():
-            try:
-                index = line.index(word)
-                for offset in range(len(word)):
-                    characters.append((index+offset+row, index+offset))
-            except ValueError:
-                pass
-
-        return characters
-
-    def _search_diagonal_west(self, word):
-        characters = []
-
-        for row, line in self._diagonal_west.items():
-            try:
-                index = line.index(word)
-                for offset in range(len(word)):
-                    characters.append(
-                        (row-offset, index+offset),
-                    )
-            except ValueError:
-                pass
-
-        return characters
