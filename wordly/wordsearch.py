@@ -11,6 +11,10 @@ class Line:
 
     def append(self, letter):
         """Append a single character to the end of the current line."""
+        if not isinstance(letter, str):
+            raise TypeError("must provide a string type")
+        elif len(letter) > 1:
+            raise ValueError("must provide a single letter")
         self.characters += letter
 
     def search(self, word):
