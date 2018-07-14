@@ -144,7 +144,6 @@ class TestBoard_init:
         with pytest.raises(Exception):
             board = wordsearch.Board()
 
-
     def test_not_csv(self):
         """Test that an error is raised when initializing with invalid CSV."""
         with pytest.raises(Exception):
