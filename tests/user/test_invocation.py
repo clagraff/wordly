@@ -16,12 +16,16 @@ def run():
         if args:
             cmd.extend(args)
 
-        result = subprocess.run(
-            cmd,
-            encoding="utf-8",
-        )
+        try:
+            output = subprocess.check_output(
+                cmd,
+                encoding="utf-8",
+            )
 
-        return result.stdout, result.returncode
+            return output, 0
+        except subprocess.CalledProcessError as err:
+            return err.output, err.returncode
+
     return execute_wordly
 
 
@@ -37,3 +41,11 @@ def test_too_many_arguments(run):
     _, code = run("this", "is", "too", "many", "arguments")
 
     assert code != 0
+
+
+def test_can_dispaly_help_text(run):
+    """Test that wordly can display help text using the help flag."""
+    output, code = run("--help")
+
+    assert code == 0
+    assert output  # There should be _some_ output. We dont care what it is.
