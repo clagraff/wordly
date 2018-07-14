@@ -87,7 +87,7 @@ class TestBoard_search:
 
     def test_diagonal_west_word_on_board(self):
         """Test searching for diagonal-east word returns char positions."""
-        expected = [(3, 3), (2, 2), (1, 1), (0, 0)]
+        expected = [(3, 0), (2, 1), (1, 2), (0, 3)]
         assert self.test_board.search("sgio") == expected
 
     def test_can_find_reversed_word(self):
@@ -99,3 +99,33 @@ class TestBoard_search:
         """Test that searching is case-insensitive."""
         expected = [(0, 0), (1, 0), (2, 0), (3, 0)]
         assert self.test_board.search("CATS") == expected
+
+    def test_using_large_board(self):
+        """Test finding multiple words across a large board."""
+        words = {
+            "cats": [(10, 12), (11, 12), (12, 12), (13, 12)],
+            "dogs": [(4, 3), (5, 4), (6, 5), (7, 6)],
+            "pigs": [(1, 3), (1, 4), (1, 5), (1, 6)],
+            "owls": [(8, 0), (7, 1), (6, 2), (5, 3)],
+        }
+
+        csv = """P,L,V,Q,I,Z,J,X,O,C,M,V,Z,Y,V
+L,N,K,N,K,P,N,W,L,Z,Y,I,P,C,M
+M,C,Z,Y,C,R,L,I,V,W,E,M,R,Q,I
+Z,P,L,U,D,S,Y,I,F,H,C,Y,F,V,W
+N,I,Z,F,B,O,N,U,V,G,V,J,V,G,Y
+W,G,B,P,C,B,G,N,I,X,V,Z,E,A,T
+W,S,W,D,D,M,P,S,K,J,I,Z,S,A,S
+D,T,W,R,W,S,R,G,K,V,N,O,D,Q,C
+V,T,B,N,X,M,A,H,S,U,B,M,M,C,T
+B,I,X,G,U,J,E,R,D,Q,T,D,K,N,L
+F,D,P,U,Y,Z,F,Q,P,P,V,P,D,S,L
+Z,P,V,B,S,X,Q,S,V,W,F,N,V,O,D
+F,W,Q,V,O,K,F,N,N,Y,C,A,T,S,X
+X,C,F,C,N,A,J,I,F,D,T,E,S,L,L
+I,T,F,T,R,C,J,B,X,D,B,V,K,N,Q"""
+
+        board = wordsearch.Board(csv)
+        for word, chars in words.items():
+            print(word)
+            assert board.search(word) == chars
