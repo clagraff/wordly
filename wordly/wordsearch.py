@@ -96,11 +96,11 @@ class Board:
     def _search_vertical(self, word):
         characters = []
 
-        for row, line in self._vertical.items():
+        for column, line in self._vertical.items():
             try:
                 index = line.index(word)
                 for offset in range(len(word)):
-                    characters.append((index, row+offset))
+                    characters.append((column, index+offset))
             except ValueError:
                 pass
 
@@ -113,7 +113,7 @@ class Board:
             try:
                 index = line.index(word)
                 for offset in range(len(word)):
-                    characters.append((index+offset, row+offset))
+                    characters.append((index+offset+row, index+offset))
             except ValueError:
                 pass
 
@@ -122,12 +122,12 @@ class Board:
     def _search_diagonal_west(self, word):
         characters = []
 
-        for line in self._diagonal_west.values():
+        for row, line in self._diagonal_west.items():
             try:
-                line.index(word)
+                index = line.index(word)
                 for offset in range(len(word)):
                     characters.append(
-                        (self._size-offset-1, self._size-offset-1),
+                        (row-offset, index+offset),
                     )
             except ValueError:
                 pass
