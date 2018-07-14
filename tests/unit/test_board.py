@@ -72,10 +72,15 @@ class TestBoard_search:
 
     def test_horizontal_word_on_board(self):
         """Test that searching for horizontal word returns char positions."""
-        expected = [(0, 0), (0, 1), (0, 2), (0, 3)]
+        expected = [(0, 0), (1, 0), (2, 0), (3, 0)]
         assert self.test_board.search("cats") == expected
+
+    def test_vertical_word_on_board(self):
+        """Test that searching for horizontal word returns char positions."""
+        expected = [(0, 0), (0, 1), (0, 2), (0, 3)]
+        assert self.test_board.search("cdpo") == expected
 
     def test_casing_doesnt_matter(self):
         """Test that searching is case-insensitive."""
-        expected = [(0, 0), (0, 1), (0, 2), (0, 3)]
+        expected = [(0, 0), (1, 0), (2, 0), (3, 0)]
         assert self.test_board.search("CATS") == expected
