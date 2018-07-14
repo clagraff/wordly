@@ -6,8 +6,8 @@ def create_parser():
     """Create and return a setup ArgumentParser."""
     parser = argparse.ArgumentParser(
         "wordly",
-        description="wordly can solve word searches provided in the form of "
-                    "a CSV input file."
+        description="Find and display the character positions of words hidden "
+                    "within a word search grid."
     )
 
     parser.add_argument(
