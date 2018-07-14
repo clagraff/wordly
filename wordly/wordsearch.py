@@ -67,7 +67,15 @@ class Board:
             try:
                 index = line.index(word)
                 for offset in range(len(word)):
-                    characters.append((row, index+offset))
+                    characters.append((index+offset, row))
+            except ValueError:
+                pass
+
+        for row, line in self._vertical.items():
+            try:
+                index = line.index(word)
+                for offset in range(len(word)):
+                    characters.append((index, row+offset))
             except ValueError:
                 pass
 
