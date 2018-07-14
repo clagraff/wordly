@@ -11,8 +11,9 @@ def create_parser():
     )
 
     parser.add_argument(
-        "file",
+        "csv",
         help="CSV input file containing word search",
+        type=argparse.FileType('r'),
     )
 
     return parser
