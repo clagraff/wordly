@@ -2,6 +2,40 @@
 from collections import defaultdict
 
 
+class Line:
+    """Represents a directionless character line on a word search board."""
+
+    def __init__(self, index, characters=""):
+        """Initialize instance with provided starting characters."""
+        self.index = index
+        self.characters = characters
+
+    def append(self, letter):
+        """Append a single character to the end of the current line."""
+        self.characters += letter
+
+    def search(self, word):
+        """Abtract search method to be overridden in child classes."""
+        raise NotImplementedError("this method has not been implemented.")
+
+
+class HorizontalLine(Line):
+    """Representation of a horizontal character line on a word search board."""
+
+    def search(self, word):
+        """Search for word in the line and return character positions."""
+        characters = []
+
+        try:
+            position = self.characters.index(word)
+            for offset in range(len(word)):
+                characters.append((position + offset, self.index))
+        except ValueError:
+            pass
+
+        return characters
+
+
 class Board:
     """Representation of a wordsearch board."""
 

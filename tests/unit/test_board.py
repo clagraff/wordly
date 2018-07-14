@@ -8,6 +8,54 @@ import wordly.wordsearch as wordsearch
 pytestmark = pytest.mark.unit
 
 
+class TestLine:
+    """Test suite for the Line class."""
+    def test__init__(self):
+        """Test the line constructor correctly initializes the class."""
+        index, characters = 42, "validline"
+        line = wordsearch.Line(index, characters)
+
+        assert line.index == index
+        assert line.characters == characters
+
+    def test_append_new_character(self):
+        """Test that append method correctly appends provided characters."""
+        index, characters = 42, "validline"
+        line = wordsearch.Line(index, characters)
+
+        line.append("a")
+        line.append("b")
+        line.append("c")
+
+        assert line.characters.endswith("abc")
+
+    def test_search_raises_not_implemented(self):
+        """Test that search method raises NotImplemented error."""
+        index, characters = 42, "validline"
+        line = wordsearch.Line(index, characters)
+
+        with pytest.raises(NotImplementedError):
+            line.search("line")
+
+
+class TestHorizontalLine:
+
+    @pytest.mark.parametrize(
+        "word,result",
+        [
+            ("this", [(0, 0), (1, 0), (2, 0), (3, 0)]),
+            ("words", [(15, 0), (16, 0), (17, 0), (18, 0), (19, 0)]),
+            ("has", [(8, 0), (9, 0), (10, 0)]),
+        ]
+    )
+    def test_search(self, word, result):
+        """Test that search method raises NotImplemented error."""
+        index, characters = 0, "thislinehasmanywords"
+        line = wordsearch.HorizontalLine(index, characters)
+
+        assert line.search(word) == result
+
+
 class TestBoard_init:
     """Test suite for board __init__ method."""
 
