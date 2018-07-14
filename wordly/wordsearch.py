@@ -79,4 +79,12 @@ class Board:
             except ValueError:
                 pass
 
+        for row, line in self._diagonal_east.items():
+            try:
+                index = line.index(word)
+                for offset in range(len(word)):
+                    characters.append((index+offset, row+offset))
+            except ValueError:
+                pass
+
         return characters
