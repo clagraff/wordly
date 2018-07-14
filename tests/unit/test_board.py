@@ -41,3 +41,41 @@ class TestBoard_init:
         """Test TypeError is raised when providing incorrect argument type."""
         with pytest.raises(TypeError):
             wordsearch.Board(1337)
+
+
+class TestBoard_search:
+    """Test suite for board search method."""
+    test_board = wordsearch.Board("c,a,t,s\nd,o,g,s\np,i,g,s\no,w,l,s")
+
+    def test_word_not_supplied(self):
+        """Test that not providing a search word results in a TypeError."""
+        with pytest.raises(TypeError):
+            self.test_board.search()
+
+    def test_not_a_string_supplied(self):
+        """Test that not providing a string results in a TypeError."""
+        with pytest.raises(TypeError):
+            self.test_board.search(1337)
+
+    def test_too_many_words(self):
+        """Test that providing multiple words results in a ValueError."""
+        with pytest.raises(ValueError):
+            self.test_board.search("too many words")
+
+    def test_missing_word(self):
+        """Test that searching for a word not on board results None."""
+        assert not self.test_board.search("ant")
+
+    def test_word_too_long(self):
+        """Test that searching for a word too long results in None."""
+        assert not self.test_board.search("wordtoolong")
+
+    def test_horizontal_word_on_board(self):
+        """Test that searching for horizontal word returns char positions."""
+        expected = [(0, 0), (0, 1), (0, 2), (0, 3)]
+        assert self.test_board.search("cats") == expected
+
+    def test_casing_doesnt_matter(self):
+        """Test that searching is case-insensitive."""
+        expected = [(0, 0), (0, 1), (0, 2), (0, 3)]
+        assert self.test_board.search("CATS") == expected
