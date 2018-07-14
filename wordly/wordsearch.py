@@ -61,6 +61,26 @@ class Board:
             return None
 
         word = word.lower()
+
+        search_methods = [
+            self._search_horizontal,
+            self._search_vertical,
+            self._search_diagonal_east,
+            self._search_diagonal_west,
+        ]
+
+        for method in search_methods:
+            chars = method(word)
+            if chars:
+                return chars
+
+            reversed_chars = method(word[::-1])
+            if reversed_chars:
+                return reversed_chars[::-1]
+
+        return None
+
+    def _search_horizontal(self, word):
         characters = []
 
         for row, line in self._horizontal.items():
@@ -71,6 +91,11 @@ class Board:
             except ValueError:
                 pass
 
+        return characters
+
+    def _search_vertical(self, word):
+        characters = []
+
         for row, line in self._vertical.items():
             try:
                 index = line.index(word)
@@ -79,11 +104,31 @@ class Board:
             except ValueError:
                 pass
 
+        return characters
+
+    def _search_diagonal_east(self, word):
+        characters = []
+
         for row, line in self._diagonal_east.items():
             try:
                 index = line.index(word)
                 for offset in range(len(word)):
                     characters.append((index+offset, row+offset))
+            except ValueError:
+                pass
+
+        return characters
+
+    def _search_diagonal_west(self, word):
+        characters = []
+
+        for line in self._diagonal_west.values():
+            try:
+                line.index(word)
+                for offset in range(len(word)):
+                    characters.append(
+                        (self._size-offset-1, self._size-offset-1),
+                    )
             except ValueError:
                 pass
 
