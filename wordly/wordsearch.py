@@ -6,8 +6,12 @@ class Board:
     """Representation of a wordsearch board."""
 
     def __init__(self, csv):
+        """Parse CSV into current board instance."""
         if not csv:
             raise ValueError("must provide CSV text")
+
+        if not isinstance(csv, str):
+            raise TypeError("CSV argument must be a string")
 
         self._horizontal = defaultdict(str)
         self._vertical = defaultdict(str)
@@ -16,20 +20,23 @@ class Board:
         self._parse_input(csv)
 
     def _parse_input(self, csv):
-        x, y = 0, 0
+        row, column = 0, 0
         for line in csv.split("\n"):
-            x = 0
+            column = 0
 
             for char in line.split(","):
                 if len(char) != 1:
-                    raise ValueError("only single letters allowed per column.")
+                    raise ValueError("only single letters allowed per column")
 
-                self._horizontal[y] += char
-                self._vertical[x] += char
-                self._diagonal[x-y] += char
+                if char.isdigit():
+                    raise ValueError("numbers not allowed in board")
 
-                x += 1
-            y += 1
+                self._horizontal[row] += char
+                self._vertical[column] += char
+                self._diagonal[column - row] += char
 
-        if x != y:
+                column += 1
+            row += 1
+
+        if row != column:
             raise ValueError("provide word search board must be a square")
