@@ -29,6 +29,32 @@ class TestLine:
 
         assert line.characters.endswith("abc")
 
+    @pytest.mark.parametrize(
+        "value",
+        [
+            1337,
+            42.00,
+            list(),
+            dict(),
+            object(),
+        ]
+    )
+    def test_raise_type_error_on_invalid_append_type(self, value):
+        """Test that append method raises a TypeError on invalid arg types."""
+        index, characters = 42, "validline"
+        line = wordsearch.Line(index, characters)
+
+        with pytest.raises(TypeError):
+            line.append(value)
+
+    def test_raise_value_error_on_too_many_appended_letters(self):
+        """Test that a ValueError is raised if appending more than 1 letter."""
+        index, characters = 42, "validline"
+        line = wordsearch.Line(index, characters)
+
+        with pytest.raises(ValueError):
+            line.append("toomanyletters")
+
     def test_search_raises_not_implemented(self):
         """Test that search method raises NotImplemented error."""
         index, characters = 42, "validline"
