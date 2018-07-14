@@ -53,6 +53,25 @@ class VerticalLine(Line):
         return characters
 
 
+class DiagonalEastLine(Line):
+    """Representation of diagonal east character line on word search board."""
+
+    def search(self, word):
+        """Search for word in the line and return character positions."""
+        characters = []
+
+        try:
+            position = self.characters.index(word)
+            for offset in range(len(word)):
+                characters.append(
+                    (self.index+position+offset, position+offset),
+                )
+        except ValueError:
+            pass
+
+        return characters
+
+
 class Board:
     """Representation of a wordsearch board."""
 
