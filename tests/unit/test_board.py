@@ -31,3 +31,8 @@ class TestBoard_init:
         """Test that a ValueError is raised when input CSV is not a square."""
         with pytest.raises(ValueError):
             wordsearch.Board("1,2,3,4\n5,6,7,8")
+
+    def test_value_error_on_too_many_characters(self):
+        """Test ValueError raised when providing multiple chars per column."""
+        with pytest.raises(ValueError):
+            wordsearch.Board("too,many,chars\nper,each,col\non,this,board")
