@@ -36,6 +36,23 @@ class HorizontalLine(Line):
         return characters
 
 
+class VerticalLine(Line):
+    """Representation of a vertical character line on a word search board."""
+
+    def search(self, word):
+        """Search for word in the line and return character positions."""
+        characters = []
+
+        try:
+            position = self.characters.index(word)
+            for offset in range(len(word)):
+                characters.append((self.index, position + offset))
+        except ValueError:
+            pass
+
+        return characters
+
+
 class Board:
     """Representation of a wordsearch board."""
 
